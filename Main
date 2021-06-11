@@ -193,7 +193,7 @@ def enemy():### THIS FUNCTION IS FOR THE ENEMY
         time.sleep(text_speed)
 
     monster_health = random.randint(start_health,end_health)
-    monster_name = random.choice(['Rob', 'Rick', 'Bob', 'Michael', 'Boomer','Zoomer', 'Epic Games','Kirill', 'Eric', 'Shon','Chris','Jimmy','Thomas','Cray','Rose','Diabetes','Life good','Simon','Rusu','Daniel','Evan','Fridman','Max','John','Ryan','Trisha','Rachel','Armen','Liam','Noah','Lucas'])
+    monster_name = random.choice(['Rob', 'Rick', 'Bob', 'Michael', 'Boomer','Zoomer', 'Epic Games','Cray','Rose','Diabetes','Life good'])
     for char in 'You have to fight an enemy because you chose the wrong path\nYou will have to use your strength to kill them\n\nThe name of the monster is: ':
         textslow()
     print(monster_name)
