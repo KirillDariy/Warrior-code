@@ -1,0 +1,1081 @@
+#Game
+import time
+import sys
+import random
+#intro
+text_speed = 0.04
+
+tRed =  '\033[91m' # Red Text
+tGreen = '\033[32m' # Green Text
+tGreen2 ='\033[92m' # A dark Green
+tGold = '\033[93m' # Blue Text
+tCyan = '\033[96m' # Cyan Text
+default_font = '\033[m' # reset to the defaults
+Bold = '\033[1m' # make text bold
+bGreen = '\033[42m'
+tBlack = '\033[30m'
+
+
+character_health = 100
+strength = random.choice([30,35,40,45,50])
+
+number1 = 0
+
+# while number1 != 500:
+
+
+#     number1 = str(number1)
+#     tTest = '\033[' + number1 + 'm'
+#     print(tTest + 'Hello World')
+#     number1 = int(number1)
+#     number1+= 1
+    
+#     yessir = input()
+#     if yessir == 'm':
+#         print(number1)
+
+
+##############################################################################
+##############################################################################
+##############################################################################
+
+#All the important custom functions
+
+def textslow(): #TO MAKE TEXT PRINT CHARACTER BY CHARACTER
+    sys.stdout.write(char)
+    sys.stdout.flush()
+    time.sleep(text_speed)
+
+def witch(): #THIS FUNCTION IS FOR THE WITCH
+
+    global character_health
+    global strength 
+
+    def textslow():
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(text_speed)
+
+    for char in 'A witch just apeared in the middle of nowhere,\nAnd they will give you a random potion\nOne of the three potions that the witch will give you is | strength | health | or weakness |\nDrum roll please ':
+        textslow()
+
+    for i in range(3):
+        time.sleep(0.5)
+        print('.', end =' ')
+
+    random_potion = random.randint(1,3)
+    if random_potion == 1: #Strength
+        for char in '\n\nYou got 5 strength from the witch!':
+            textslow()
+        strength += 5
+
+    elif random_potion == 2: #Health
+        for char in '\n\nYou got 10 health from the witch!':
+            textslow()
+        character_health += 10
+
+    else: #negative effects
+        for char in '\n\nYou got a weakness potion that dealt 5 strength and 5 health!':
+            textslow()
+        character_health -= 5
+        strength -= 5
+    for char in '\n\nHere are you current stats: \n':
+        textslow()
+    print(tGold + '\n-------------------')
+    print(tRed + 'Strength: ' , strength)
+    print(tGreen + 'Health: ', character_health)
+    print(tGold + '-------------------\n\n\n' + default_font)
+
+def mathprob(): ### THIS IS THE MATH PROBLEM
+
+    def textslow():
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(text_speed)
+    
+    def inputNumber(message): #THIS IS ERROR CORRECTION FOR FOOL PROOF
+        while True:
+            try:
+                userInput = int(input(message))
+
+            except ValueError:
+                print('\nPlease try again\n')
+                continue
+            else:
+                return userInput 
+                break
+
+    num1 = random.randint(1,100)
+    num2 = random.randint(1,100)
+    for char in 'Add these 2 numbers\n':
+        textslow()
+    print(num1)
+    print('+')
+    print(num2)
+    num_input = inputNumber('Enter sum here: ')
+    num_ans = num1 + num2
+    if num_input == num_ans:
+        for char in 'You are correct,\nbut you don\'t get anything because I am not that nice.\n':
+            textslow()
+    else:
+        for char in 'You are incorrect,\nbut as a little tip, you could improve your math skills.\n ':
+            textslow()
+        time.sleep(1)
+        for char in 'Harsh man\n':
+            textslow()
+
+def randomHouse(): #THIS FUNCTION IS FOR RANDOM HOUSE PLACE
+
+    global character_health
+    global strength 
+
+    def textslow():
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(text_speed)
+
+    for char in 'You just found a random house!\nYou will now find a random potion that you will have to drink and make a decision about it\n\nLet\'s find out what colour is the potion\n\n':
+        textslow()
+    time.sleep(0.5)
+    potion_colour = random.choice(['Red','Blue','Green','Purple','Yellow','Black'])
+    for char in 'The colour is ':
+        textslow()
+    print(potion_colour)
+
+    while True:
+        for char in 'Would you like to drink the random potion? (Y|N): ':
+            textslow()
+        yes = input().lower()
+        if yes in ('y','n'):
+            break
+
+    if yes == 'y':
+        for char in '\nYou decided to drink the potion. Let\'s see what the effects are.\n':
+            textslow()
+        potion = random.choice(['h','s','d'])
+        
+        if potion == 'h':
+            for char in 'It was a health potion and you got 15 health for it\nCongrats.\n':
+                textslow()
+            character_health += 15
+        elif potion == 's':
+            for char in 'It was a strength potion and you got 15 strength\nLucky person!\n':
+                textslow()
+            strength += 15
+        else: #This is the Damage one
+            for char in 'Unfortunately you got a damage potion and your health has been reduced by 20\n':
+                textslow()
+            character_health -= 20
+    else: #If you skip it
+        for char in 'You decided to skip the house, that means that you will not get anything.\n':
+            textslow()
+    for char in '\nHere are your current stats:\n':
+        textslow()
+    print(tGold + '\n-------------------')
+    print(tRed + 'Strength: ' , strength)
+    print(tGreen + 'Health: ', character_health)
+    print(tGold + '-------------------\n\n\n' + default_font)
+start_health = 60
+end_health = 190
+enemy_damage = 20
+
+def enemy():### THIS FUNCTION IS FOR THE ENEMY
+
+    global character_health
+    global strength 
+    global start_health
+    global end_health
+    global enemy_damage
+
+    def textslow(): #TO MAKE TEXT PRINT CHARACTER BY CHARACTER
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(text_speed)
+
+    monster_health = random.randint(start_health,end_health)
+    monster_name = random.choice(['Rob', 'Rick', 'Bob', 'Michael', 'Boomer','Zoomer', 'Epic Games','Kirill', 'Eric', 'Shon','Chris','Jimmy','Thomas','Cray','Rose','Diabetes','Life good','Simon','Rusu','Daniel','Evan','Fridman','Max','John','Ryan','Trisha','Rachel','Armen','Liam','Noah','Lucas'])
+    for char in 'You have to fight an enemy because you chose the wrong path\nYou will have to use your strength to kill them\n\nThe name of the monster is: ':
+        textslow()
+    print(monster_name)
+    for char in '\nIf you win the battle, you will get a bit of strength and health as a reward\n\n':
+        textslow()
+    for char in '\nUse your skills very wisely to not lose health because you will have to fight the final boss later.\nIf you die right now, then you will not be able to continue!\n\nThe monster has ':
+        textslow()
+    print(monster_health , 'health,', end =' ')
+    for char in 'and deals ':
+        textslow()
+    print(enemy_damage, end ='')
+    for char in ' damage\n':
+        textslow()
+    for char in 'You have ':
+        textslow()
+    print(character_health, 'health and', end = ' ')
+    for char in 'you deal ':
+        textslow()
+    print(strength, 'damage')
+
+    while monster_health > 0:
+        while True:
+            action = input('\nUse Q to defend and E to attack: ').lower()
+            if action == 'q': #Defend
+                for char in '\nYou chose to defend,\n':
+                    textslow()
+                monster_action = random.randint(1,2) # 50/50 chance of the action of the monster
+                if monster_action == 1:
+                    for char in 'The monster also chose to defend\n\nIn the end, nothing happened\n':
+                        textslow()
+                elif monster_action == 2:
+                    for char in 'The monster chose to attack, they only did 10 health of damage through your shield\nYou also ended up doing 10 damage to the monster because you caught him off guard\n':
+                        textslow()
+                    character_health -= 10
+                    monster_health -= 10
+                    for char in '\nYou only have ':
+                        textslow()
+                    print(character_health, 'health left')
+                    for char in 'The monster still has ':
+                        textslow()
+                    print(monster_health ,'health left')
+                    if monster_health <= 0: #If the monster dies
+                        for char in 'Good job, you killed the monster!\nYou may continue on your journey\nYou will now get a random amount of strength from the monster and 50 health\n':
+                            textslow()
+                        random_strength = random.randint(5,10)
+                        print('You will get ', random_strength , 'strength!')
+                        character_health += 50
+                        strength = strength + random_strength
+                        break
+                    else:
+                        for char in '\nKeep on trying\n':
+                            textslow()
+            elif action == 'e': #if action is e (attacking)
+                monster_health = monster_health - strength
+                for char in '\nYou chose to attack the monster.\nYou dealt ':
+                    textslow()
+                print(strength, 'damage', end = ' ')
+                for char in 'to the monster\n':
+                    textslow()
+                monster_action = random.randint(1,2) #50/50 chance of luck
+                if monster_health <= 0: #If the monster dies
+                    for char in '\nGood job, you killed the monster!\nYou may continue on your journey\n\nYou will now get a random amount of strength from the monster and 50 health\n':
+                        textslow()
+                    random_strength = random.randint(5,10)
+                    print(random_strength, 'is the amount of strength you will get.')
+                    character_health += 50
+                    strength = strength + random_strength
+                    break
+                elif monster_action == 1:
+                    for char in 'The monster just watched you fight them\n':
+                        textslow()
+                    time.sleep(0.5)
+                    for char in 'He was just lazy\n\nThe monster still has ':
+                        textslow()
+                    print(monster_health ,'health left')
+                    for char in 'You have ':
+                        textslow()
+                    print(character_health, 'health left')
+                    for char in 'Keep on trying\n':
+                        textslow()
+                else: #If monster_actioin == 2:
+                    for char in 'The monster didn\'t like what you did so he also decided to attack you aswell. He did 20 health of damage to you.\n\nThe monster still has ':
+                        textslow()
+                    character_health -= 20
+                    print(monster_health ,'health left')
+                    for char in 'You have ':
+                        textslow()
+                    print(character_health, 'health left')
+                    for char in 'Keep on trying\n':
+                        textslow()
+            else:
+                print()
+
+    for char in '\nHere are you current stats: \n':
+        textslow()
+    print(tGold + '\n-------------------')
+    print(tRed + 'Strength: ' , strength)
+    print(tGreen + 'Health: ', character_health)
+    print(tGold + '-------------------\n\n\n' + default_font)
+    start_health += 25
+    end_health += 25
+    enemy_damage += 10
+
+#part of map() function, there is no point for this to be repeated
+
+xfactor = tRed + Bold + 'X' + default_font + tGold
+checkmark = Bold + tCyan + '✓' + default_font + tGold 
+tiles = []
+for i in range(121):
+    tiles.append('?')
+tiles[60] = xfactor
+
+def map():
+    count = 0
+    for i in tiles:
+        if tiles[count] == xfactor:
+            tiles[count] = checkmark
+        count += 1
+    coord = 121-11*(y)+x
+    tiles[coord-1] = xfactor
+    print(tGold + ' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[0:11], sep = '  |  ', end='  |\n'  ) #1st row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[11:22], sep = '  |  ', end='  |\n'  )  #2nd row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[22:33], sep = '  |  ', end='  |\n'  )  #3rd row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[33:44], sep = '  |  ', end='  |\n'  )  #4th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[44:55], sep = '  |  ', end='  |\n'  )  #5th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[55:66], sep = '  |  ', end='  |\n'  )  #6th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[66:77], sep = '  |  ', end='  |\n'  )  #7th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[77:88], sep = '  |  ', end='  |\n'  ) #8th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[88:99], sep = '  |  ', end='  |\n'  )  #9th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[99:110], sep = '  |  ', end='  |\n'  )  #10th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|')
+    print('|     |     |     |     |     |     |     |     |     |     |     |')
+    print('|  ',end='')
+    print(*tiles[110:121], sep = '  |  ', end='  |\n'  )  #11th row
+    print('|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|_ _ _|\n')
+
+    print(default_font + 'Your current location is marked with: ', xfactor + default_font)
+    print('Previous locations have been marked with: ', checkmark + default_font, '\n\n')
+
+
+##############################################################################
+############################      START      #################################
+##############################################################################
+
+
+for char in 'Welcome to Warrior \nThe game where you will have to survive and kill different enemies to get a trophy in the end \nLet\'s jump right into the game!\n\n':
+    textslow()
+username = input('Enter your username: ').capitalize()
+print('Hello', end=' ')
+for char in username:
+    textslow()
+for char in '\n\nHere are your current stats:':
+    textslow()
+print('\n\n---------------')
+for char in 'Your Health: 100 \n':
+    textslow()
+for char in 'Your Strength: ':
+    textslow()
+print(strength)
+print('---------------\n')
+#introducing to the controls
+
+for char in 'To move around the game,\nYou will have to use WASD as a movement button\n\n| W being up | S being down | A being left | D being right | \nIf you would like to see where you are on the map and all the places you have visited, type "M" when asked for the movement input.\n\nBe AWARE of the enemies that might pop up in your adventure! \n\nThese are some suggestions about the game from the developer:\nThis is a 11x11 adventure game, try not to go back to the position you were previously and do not go to the corners first because there might be a suprise.\n\nGood Luck and Have Fun!\n\n':
+    textslow()
+
+
+                #############################################
+                ############# Coordinate system #############
+                #############################################
+
+x = 6 # this is the middle of the map
+y = 6 # this is the middle of the map
+movement_counter = 0 #just to count moves 
+movement_max = 26 # this is so that the game will end sonner or later
+
+while movement_max > movement_counter: #The part where its all the brains
+    if character_health <= 0:
+        break #ends the whole while loop
+    else:
+        if x == 1: #left part of the map
+            while True: 
+                movement = input('\nUse |W|S|D| to move or |M| for map: ').lower() #should i put |M| for map?
+                if movement == 'w':
+                    y += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 's':
+                    y-= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'd':
+                    x += 1
+                    print(x,y)
+                    movement_counter
+                    break
+                elif movement == 'm':
+                    for char in '\nHere is the map that shows all the locations you have been too\n\n':
+                        textslow()
+                    map()
+                else:
+                    print()
+        elif x == 11: # right side of the map
+            while True:
+                movement = input('Use |W|A|S| to move or |M| for map: ').lower()
+                if movement == 'w':
+                    y += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 's':
+                    y-= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'a': 
+                    x -= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'm':
+                    for char in '\nHere is the map that shows all the locations you have been too\n\n':
+                        textslow()
+                    map()
+                else:
+                    print()
+        elif y == 1: #bottom part of the map
+            while True:
+                movement = input('Use |W|A|D| to move or |M| for map: ').lower()
+                if movement == 'w':
+                    y += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'a':
+                    x -= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'd':
+                    x += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break               
+                elif movement == 'm':
+                    for char in '\nHere is the map that shows all the locations you have been too\n\n':
+                        textslow()
+                    map()
+                else:
+                    print()
+        elif y == 11:#top part of the map
+            while True:
+                movement = input('Use |A|S|D| to move or |M| for map: ').lower()
+                if movement == 'a':
+                    x -= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 's':
+                    y-= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'd':
+                    x += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'm':
+                    for char in '\nHere is the map that shows all the locations you have been too\n\n':
+                        textslow()
+                    map()
+                else:
+                    print()
+        else: # middle of the map
+            while True:
+                movement = input('Use |W|A|S|D| to move or |M| for map: ').lower()
+                if movement == 'w':
+                    y += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'a':
+                    x -= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 's':
+                    y-= 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'd':
+                    x += 1
+                    print(x,y)
+                    movement_counter += 1
+                    break
+                elif movement == 'm':
+                    for char in '\nHere is the map that shows all the locations you have been too\n\n':
+                        textslow()
+                    map()
+                else:
+                    print()
+
+        #############################        
+        #Determining the coordinates#
+        #############################
+
+        if x == 7 and y == 6:#story
+            for char in 'I love the sound of beautiful birds chirping. It makes my life a little less depressing.\n\n':
+                textslow()
+        
+        elif x == 6 and y == 7: #story
+            for char in 'Well, that\'s just great.\nMy shoes are now filled with sand!\n\n':
+                textslow()
+        
+        elif x == 5 and y == 6:#story
+            for char in 'I found a cactus and a knife. Let\'s get some water.\n\n':
+                textslow()
+        
+        elif x == 6 and y == 5:#story
+            for char in 'ARGH!\nWater everywhere!\n\n':
+                textslow()
+        
+        elif x == 5 and y == 7:#witch
+            witch()
+        
+        elif x == 5 and y == 5:#witch
+            witch()
+        
+        elif x == 7 and y == 5:#witch
+            witch()
+        
+        elif x == 7 and y == 7:#witch
+            witch()
+        
+        elif x == 4 and y == 8:#story
+            for char in 'I\'m starting to see a lonely house beside a water geyser!!\n\n':
+                textslow()
+        
+        elif x == 4 and y == 7:#story
+            for char in 'I\'m starting to see different villagers in the distance\nThis is so bad for my brain.\n\n':
+                textslow()
+        
+        elif x == 4 and y == 6:#story
+            for char in 'Where are the monsters at?\n\n':
+                textslow()
+
+        elif x == 4 and y == 5:#story
+            for char in 'No sight of any animals right now,\n which means I wont die.\n\n':
+                textslow()
+                
+        elif x == 4 and y == 4:#story
+            for char in 'BOOOOOOO!\nA ghost just passed by me! I should watch out next time!\n\n':
+                textslow()
+        
+        elif x == 5 and y == 4: #enemy
+            enemy()
+
+        elif x == 6 and y == 4:#story
+            for char in 'Ya, probably shouldn\'t drink the water, it\'s really salty.\n\n':
+                textslow()
+                
+        elif x == 7 and y == 4: #enemy
+            enemy()
+            
+        elif x == 8 and y == 4:#story
+            for char in 'I am surrounded by killer sharks, going to die now. RIP\n\n':
+                textslow()
+
+        elif x == 8 and y == 5:#story
+            for char in 'Keep on swimming, keep on swimming.\n\n':
+                textslow()
+
+        elif x == 8 and y == 6:#story
+            for char in 'These are huge waves that I am in. It\'s like a tsunami!\n\n':
+                textslow()
+
+        elif x == 8 and y == 7:#story
+            for char in 'These are some interesting branches which I could make something out of them.\n\n':
+                textslow()
+        
+        elif x == 8 and y == 8:#story
+            for char in 'This is such a beautiful scene. I wish I had a camera.\n\n':
+                textslow()
+        
+        elif x == 7 and y == 8:#story
+            for char in 'I see a house in the distance.\n\n':
+                textslow()
+
+        elif x == 6 and y == 8:#witch
+            witch()
+        
+        elif x == 5 and y == 8:#story
+            for char in 'Well, that\'s great,\nThere is a sand storm and I don\'t know what to do at the moment.\n\n':
+                textslow()
+        
+        elif x == 3 and y == 9:#story
+            for char in 'My thirst is almost out. I NEED WATER!\n\n':
+                textslow()
+        
+        elif x == 3 and y == 8:#Random House
+            randomHouse()
+        
+        elif x == 3 and y == 7:#witch
+            witch()
+        
+        elif x == 3 and y == 6:#story
+            for char in 'Oh my, QUICKSAND!\n I have to try and get out of this sand to not die\n':
+                textslow()
+            time.sleep(0.5)
+            for char in 'Okay, I got out, that was pretty easy\n\n':
+                textslow()
+        
+        elif x == 3 and y == 5:#enemy
+            enemy()
+
+        elif x == 3 and y == 4: #Math problem
+            mathprob()
+        
+        elif x == 3 and y == 3:#witch
+            witch()
+        
+        elif x == 4 and y == 3:#story
+            for char in 'BBB RRR!\n I am getting more hungry every second!\n\n':
+                textslow()
+        
+        elif x == 5 and y == 3:#story
+            for char in 'Some freshwater I can use\n':
+                textslow()
+            strength += 5
+            for char in 'Your strength has been increaed by 5\n\n':
+                textslow()
+        
+        elif x == 6 and y == 3:#enemy
+            enemy()
+        
+        elif x == 7 and y == 3:#story
+            for char in 'These are some pretty cool corals at the bottom!\n\n':
+                textslow()
+                
+        elif x == 8 and y == 3:#enemy
+            enemy()
+        
+        elif x == 9 and y == 3:#story
+            for char in 'ARGH! A jellyfish has been found, and I have to get out of here ASAP before I get stung!\n\n':
+                textslow()
+                
+        elif x == 9 and y == 4:#Random House
+            randomHouse()
+        
+        elif x == 9 and y == 5:#witch
+            witch()
+        
+        elif x == 9 and y == 6:#Math problem
+            mathprob()
+
+        elif x == 9 and y == 7:#Random House
+            randomHouse()
+        
+        elif x == 9 and y == 8:#enemy
+            enemy()
+        
+        elif x == 9 and y == 9:#story
+            for char in 'No sign of humans anywhere, probably a bad thing...\n\n':
+                textslow()
+                
+        elif x == 8 and y == 9:#witch
+            witch()
+        
+        elif x == 7 and y == 9:#Random House
+            randomHouse()
+        
+        elif x == 6 and y == 9:#enemy
+            enemy()
+        
+        elif x == 5 and y == 9:#story
+            for char in 'It is boiling hot in this weather,\nIt\'s probably better in heaven.':
+                textslow()
+        
+        elif x == 4 and y == 9:#enemy
+            enemy()
+        
+        elif x == 2 and y == 10:#witch
+            witch()
+    
+        elif x == 2 and y == 9:#story
+            for char in 'Oh my, there is a huge spide on my leg.\nLet\'s get him off me.\nThere we go.':
+                textslow()
+        
+        elif x == 2 and y == 8:#witch
+            witch()
+        
+        elif x == 2 and y == 7:#enemy
+            enemy()
+        
+        elif x == 2 and y == 6:#Math problem
+            mathprob()
+    
+        elif x == 2 and y == 5:#story
+            for char in 'What are these thick leaves? I can barely move in this forest!\n\n':
+                textslow()
+        
+        elif x == 2 and y == 4:#witch
+            witch()
+        
+        elif x == 2 and y == 3:#enemy
+            enemy()
+        
+        elif x == 2 and y == 2:#Math problem
+            mathprob()
+        
+        elif x == 3 and y == 2:#enemy
+            enemy()
+        
+        elif x == 4 and y == 2:#Random House
+            randomHouse()
+        
+        elif x == 5 and y == 2:#Math problem
+            mathprob()
+        
+        elif x == 6 and y == 2:#story
+            for char in 'I just found a piece of wood floating, I will use that to regenerate my stamina.\n\n':
+                textslow()
+                
+        elif x == 7 and y == 2:#witch
+            witch()
+        
+        elif x == 8 and y == 2:#witch
+            witch()
+        
+        elif x == 9 and y == 2:#Math problem
+            mathprob()
+        
+        elif x == 10 and y == 2:#enemy
+            enemy()
+        
+        elif x == 10 and y == 3:#witch
+            witch()
+        
+        elif x == 10 and y == 4:#story
+            for char in 'I can see a HUGE whale right below me!\n\n':
+                textslow()
+
+        elif x == 10 and y == 5:#enemy
+            enemy()
+        
+        elif x == 10 and y == 6:#story
+            for char in 'That\'s a waterfall. FREE WATER!\n\n':
+                textslow()
+        
+        elif x == 10 and y == 7:#story
+            for char in 'Found some animals, time to kill them.\n\n':
+                textslow()
+        
+        elif x == 10 and y == 8:#witch
+            witch()
+        
+        elif x == 10 and y == 9:#story
+            for char in 'It feels like I\'ve been here for ages...\n\n':
+                textslow()
+        
+        elif x == 10 and y == 10:#witch
+            witch()
+        
+        elif x == 9 and y == 10 :#Math problem
+            mathprob()
+        
+        elif x == 8 and y == 10:#story
+            for char in 'This is a pretty cool flower, should I smell it?\n':
+                textslow()
+            while True:
+                flower = input('Yes or no?: ').lower()
+                if flower == 'y' or flower == 'yes':
+                    for char in 'The flower gave you by accidently 5 strength. What luck!\n\n':
+                        textslow()
+                    break
+                elif flower == 'n' or flower == 'no':
+                    for char in 'The flower might have been dangerous, who knows...\n\n':
+                        textslow()
+                    break
+                else:
+                    print()
+
+        elif x == 7 and y == 10:#story
+            for char in 'I just found an ancient ruin that holds warer, might come in handy.\n\n ':
+                textslow()
+        
+        elif x == 6 and y == 10:#story
+            for char in 'Great,\nThere are coyotes on my tail now.\nHopefully they will not hunt me down!\n\n':
+                textslow()
+        
+        elif x == 5 and y == 10:#enemy
+            enemy()
+        
+        elif x == 4 and y == 10:#story
+            for char in 'Is that a mirage?! A house just disappeared!\n\n':
+                textslow()
+        
+        elif x == 3 and y == 10:#story
+            for char in 'I am dying of thirst out here in the open!\n\n':
+                textslow()
+        
+        elif x == 2 and y == 10:#witch
+            witch()
+    
+        elif x == 1 and y == 9:#enemy
+            enemy()
+        
+        elif x == 1 and y == 8:#story
+            for char in 'AAAHHH!\n I just found a dead body buried in the sand.\n':
+                textslow()
+            time.sleep(0.5)
+            for char in 'Welp, that was gross\n\n':
+                textslow()
+        
+        elif x == 1 and y == 7:#story
+            for char in 'There is a wild trader in the distance.\n Going to try to stay away from sight so he does not follow me.\n\n':
+                textslow()
+        
+        elif x == 1 and y == 6:#story
+            for char in 'YO!\n Is that a GIANT CENTIPEDE! Sick \n\n':
+                textslow()
+        
+        elif x == 1 and y == 5:#enemy
+            enemy()
+        
+        elif x == 1 and y == 4:#story
+            for char in 'I should be aware of the small branches from the tall trees,\nThey might hit me\n\n':
+                textslow()
+        
+        elif x == 1 and y == 3:#story
+            for char in 'UGH!\nNo cellular connection! I am going to die from not having any connection. Not a single bar!\n\n':
+                textslow()
+        
+        elif x == 3 and y == 1:#story
+            for char in 'I think I see something in the distance.\nSomething small...\n\n':
+                textslow()
+        
+        elif x == 4 and y == 1:#witch
+            witch()
+        
+        elif x == 5 and y == 1:#story
+            for char in 'I think there was a snake 5 meters away from me! I need to pay attention!\n\n':
+                textslow()
+        
+        elif x == 6 and y == 1:#story
+            for char in 'I am about to cross a sketchy bridge.\n':
+                textslow()
+            while True:
+                decision = input('Do I cross it? (Y/N): ').lower()
+                if decision == 'y':
+                    for char in 'I crossed it without dieing. Hooray!\n\n':
+                        textslow()
+                    break
+                elif decision == 'n':
+                    for char in 'I guess I will just go around it.\n\n':
+                        textslow()
+                    break
+                else:
+                    print()
+
+        elif x == 7 and y == 1:#enemy
+            enemy()
+        
+        elif x == 8 and y == 1:#story
+            for char in 'I think I see something in the distance...\n\n':
+                textslow()
+                
+        elif x == 9 and y == 1:#witch
+            witch()
+        
+        elif x == 11 and y == 3:#story
+            for char in 'Oh no, the fog is thickening.\n\n':
+                textslow()
+                
+        elif x == 11 and y == 4:#Math problem
+            mathprob()
+        
+        elif x == 11 and y == 5:#Random House
+            randomHouse()
+        
+        elif x == 11 and y == 6:#story
+            for char in 'I\'m getting tired of swimming now.\n\n':
+                textslow()
+                
+        elif x == 11 and y == 7:#enemy
+            enemy()
+        
+        elif x == 11 and y == 8:#Math problem
+            mathprob()
+        
+        elif x == 11 and y == 9:#enemy
+            enemy()
+        
+        elif x == 9 and y == 11:#Math problem
+            mathprob()
+        
+        elif x == 8 and y == 11:#enemy
+            enemy()
+        
+        elif x == 7 and y == 11:#witch
+            witch()
+        
+        elif x == 6 and y == 11:#story
+            for char in 'Maybe I should find some sticks to make a fire.\n\n':
+                textslow()
+        
+        elif x == 5 and y == 11:#witch
+            witch()
+        
+        elif x == 4 and y == 11:#Math problem
+            mathprob()
+        
+        elif x == 3 and y == 11:#witch
+            witch()
+
+        elif x == 6 and y == 6:#this is in case someone goes backwards to the starting position
+            for char in 'Looks like you went back to your starting position.\nTry not to do this because there is nothing here.\n\n*** You have been sent back to your previous location ***\n\n':
+                textslow()
+
+            if movement == 'w':
+                y -= 1                
+            elif movement == 'a':
+                x += 1                
+            elif movement == 's':
+                y+= 1
+            elif movement == 'd':
+                x += 1
+            movement_counter -= 1
+
+        else: #prepare ready for the final boss
+            movement_counter += 100
+
+        if movement != 'm': #change the list ? to a check mark for the current location of the player
+            count = 0
+            for i in tiles:
+                if tiles[count] == xfactor:
+                    tiles[count] = checkmark
+                count += 1
+            coord = 121-11*(y)+x
+            tiles[coord-1] = xfactor
+
+if character_health <= 0: #check if the character is dead
+    if character_health <= 0:
+        for char in 'Unfortunately you die. :( \nThat is game over for you.\nThank you for playingn Warrior!\n':
+            textslow()
+
+else: # if character is applicable for the final boss
+    monster_health = random.randint(300,500)
+    monster_name = 'Epic Boomer'
+
+    for char in 'This is your turn to prove who you actually are\nYou have to use your strength to kill the FINAL BOSS!\n This is not as easy as the other ones because the stats of this character is always random.\n':
+        textslow()
+    time.sleep(1)
+    for char in 'Take a moment to think about all the accomplishment and success you had to just get to this spot.\nInfront of a huge crowd of 1 million people!\nThis is your moment!\n':
+        textslow()
+    time.sleep(1)
+    for char in 'Here comes the final boss\nThe name of the final boss is: ':
+        textslow()
+    print(monster_name)
+    for char in 'If you win the battle, you will get a medal of all Warriors!!\nUse your skill very wisely to not lose health because this is your only time to shine!\nNo pressure\n\nThe monster has ':
+        textslow()
+    print(monster_health , 'health,')
+    for char in 'And deals 55 damage\nWhile you have ':
+        textslow()
+    print(character_health, 'health and', end = ' ')
+    print(strength, 'damage')
+
+    while monster_health > 0:
+        if character_health > 0:
+            action = input('Use Q to defend and E to attack: ').lower()
+            if action == 'q': #Defend
+                for char in 'You chose to defend\n':
+                    textslow()
+                monster_action = random.randint(1,2) # 50/50 chance of the action of the monster
+                if monster_action == 1:
+                    for char in 'The monster also chose to defend\nYou just looked very deeply into thier eyes.\n':
+                        textslow()
+                elif monster_action == 2:
+                    for char in 'The monster chose to attack, they only did 40 health of damage through your shield\nYou ended up doing 30 damage to the monster because you caught him off guard and the crowd is cheering for you.\n':
+                        textslow()
+                    character_health -= 40
+                    monster_health -= 30
+                    for char in 'You only have ':
+                        textslow()
+                    print(character_health, 'health left')
+                    for char in 'The monster still has ':
+                        textslow()
+                    print(monster_health ,'health left')
+                    if monster_health <= 0: #If the monster dies
+                        for char in 'Good job, you killed the final boss!\n':
+                            textslow()
+                    else:
+                        for char in 'Keep on trying.\nYou have to kill him!\n':
+                            textslow()
+            else: #if action is e (attacking)
+                monster_health = monster_health - strength
+                for char in 'You chose to attack the monster.\nYou dealt ':
+                    textslow()
+                print(strength, 'damage')
+                for char in 'To the monster\nAnd keep it up!\n\n':
+                    textslow()
+                monster_action = random.randint(1,2) #50/50 chance of luck
+                if monster_health <= 0: #If the monster dies
+                    for char in 'Good job, you killed the final boss!\n':
+                        textslow()
+                elif monster_action == 1:
+                    for char in 'The monster just watched you fight them\n':
+                        textslow()
+                    time.sleep(0.5)
+                    for char in 'He was just lazy\nThe monster still has ':
+                        textslow()
+                    print(monster_health ,'health left')
+                    for char in 'You have ':
+                        textslow()
+                    print(character_health, 'health left')
+                    for char in 'Keep on trying\n':
+                        textslow()
+                else: #If monster_actioin == 2:
+                    character_health -= 55
+                    for char in 'The monster didn\'t like what you did so he also decided to attack you aswell. He did 55 health of damage to you.\nThe monster still has ':
+                        textslow()
+                    print(monster_health ,'health left')
+                    for char in 'You have ':
+                        textslow()
+                    print(character_health, 'health left')
+                    for char in 'Keep on trying\n':
+                        textslow()
+        else:
+            monster_health = -1
+    if character_health <= 0: # if the player dies
+
+        for char in 'Unfortunately you die. :( \nThat is game over for you.\n':
+            textslow()
+
+    else: # if the player wins
+        for char in 'CONGRATULATIONS ':
+            textslow()
+        for char in username:
+            textslow()
+        for char in ' !!!!!!!\nYou won "Warriors" without dying!\nHere is your reward!\n':
+            textslow()
+        print('\n\n     /\      ')
+        print('    /  \     ')
+        print('   /____\    ')
+        print('  /\    /\   ')
+        print(' /  \  /  \  ')
+        print('/____\/____\ \n\n')
+
+        for char in 'Take it or leave it\n':
+            textslow()
+    for char in '\nThank you for playing Warrior!':
+            textslow()
