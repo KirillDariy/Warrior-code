@@ -3,7 +3,7 @@ import time
 import sys
 import random
 #intro
-text_speed = 0.0 #change to 0 for testing, use 0.04 for playing
+text_speed = 0.03 #change to 0 for testing, use 0.04 for playing
 tRed =  '\033[91m' # Red Text
 tGreen = '\033[32m' # Green Text
 tGold = '\033[93m' # Gold Text
@@ -285,9 +285,9 @@ while movement_max > movement_counter: #The part where its all the brains
                     break
                 elif movement == 'm':
                     map()
-        #############################        
-        #Determining the coordinates#
-        #############################
+        #################################        
+        #  Determining the coordinates  #
+        #################################
         if x == 7 and y == 6:#story
             textslow('I love the sound of beautiful birds chirping. It makes my life a little less depressing.\n\n')
         elif x == 6 and y == 7: #story
