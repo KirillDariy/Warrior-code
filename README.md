@@ -4,7 +4,7 @@ This game is an adventure game where a character can move around in a 11x11 map 
 
 ## Here are some of the images of the gameplay
 
-** Introduction to the game **
+__ Introduction to the game __
 
 ![Warrior-Intro](https://user-images.githubusercontent.com/85752924/210645168-314d5f71-89a2-4976-b4d7-ddec4fae7388.png)
 
